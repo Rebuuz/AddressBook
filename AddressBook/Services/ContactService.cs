@@ -6,13 +6,19 @@ namespace AddressBook.Services;
 
 public class ContactService
 {
-    //Sparar i filerna
-    private readonly FileService _fileService = new FileService(@"C:\EC\DotNet\contacts.json");
+    /// <summary>
+    /// Sparar till en json-fil på datorn. 
+    /// </summary>
+    private readonly FileService _fileService = new FileService(Path.Combine(Environment.CurrentDirectory, @"..\..\..\SavedFiles\content.json"));
 
-    //Skapar en tom lista
+    /// <summary>
+    /// En tom lista
+    /// </summary>
     private List<Contact> _contacts = [];
 
-    //Lägga till kontaker i listan
+    /// <summary>
+    /// Lägger till objekt (kontakter) till listan
+    /// </summary>
     public void AddContactToList(Contact contact)
     {
         try
@@ -21,7 +27,10 @@ public class ContactService
             {
                 _contacts.Add(contact);
                 _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+                
                 Console.WriteLine("Kontakten är tillagd i addressboken.");
+                Console.WriteLine();
+                Thread.Sleep(2000);
             }
         }
         
@@ -31,33 +40,76 @@ public class ContactService
         }
     }
 
-    //Hämtar listan
+    /// <summary>
+    /// Hämtar listan med hjälp av List istället för IEnumerable så att man kan ändra innehållet i listan, 
+    /// istället för att den ska vara readonly.
+    /// </summary>
 
-    public IEnumerable<Contact> GetContactsFromList()
+    public List<Contact> GetContactsFromList()
     {
+        List<Contact> contacts = new List<Contact>();
+
         try
         {
-            var contacts = _fileService.GetContactsFromFile();
-            Debug.WriteLine($"Innehåll från filen: {contacts}");
-
-            if (!string.IsNullOrEmpty(contacts))
+            var content = _fileService.GetContactsFromFile();
+            if (!string.IsNullOrEmpty(content))
             {
-                var deserializedContacts = JsonConvert.DeserializeObject<List<Contact>>(contacts);
-                if (deserializedContacts != null)
-                {
-                    _contacts.Clear(); // Rensa befintliga kontakter i _contacts-listan
-                    _contacts.AddRange(deserializedContacts); // Lägg till de deserialiserade kontakterna i _contacts
-                    Debug.WriteLine("Deserialisering lyckades.");
-                }
+                _contacts = JsonConvert.DeserializeObject<List<Contact>>(content)!;
             }
+
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Det gick inte att hämta listan: {ex.Message}");
+            Debug.WriteLine($"{ex.Message}");
         }
-
         return _contacts;
     }
+    /// <summary>
+    /// Funktionen för att kunna radera en kontakt från listan. Funktionen använder sig av fileservice för att komma åt det sparade innehållet.
+    /// </summary>
+    public void DeleteContactsFromList(Contact contact)
+    {
+        Console.WriteLine($"Bekräfta att du vill radera {contact.FirstName} {contact.LastName} genom att ange epost-adressen: ");
+        string deleteByEmail = Console.ReadLine()!;
+
+        try
+        {
+            if (string.Equals(deleteByEmail, contact.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                _contacts.Remove(contact);
+                _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+
+                Console.WriteLine();
+                Console.WriteLine("Kontakten är nu borttagen.");
+                Console.WriteLine();
+                Thread.Sleep(2000);
+            }
+        }
+
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Fel vid radering av kontakt: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Funktionalitet för att kunna ändra informationen på ett element i listan.
+    /// </summary>
+    public void UpdateContactInformation(Contact existingContact, string newFirstName, string newLastName, string newEmail, string newNumber, string newAddress, string newCity, string newRegion)
+    {
+        existingContact.FirstName = newFirstName;
+        existingContact.LastName = newLastName;
+        existingContact.Email = newEmail;   
+        existingContact.Number = newNumber;
+        existingContact.Address = newAddress;
+        existingContact.City = newCity;
+        existingContact.Region = newRegion;
+
+       _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+
+    }
+
+
 }
 
 

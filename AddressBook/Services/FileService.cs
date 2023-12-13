@@ -3,7 +3,10 @@ using System.Globalization;
 
 namespace AddressBook.Services;
 
-//ett interface till min file-service för att hantera informationen
+/// <summary>
+/// Ett interface till klassen med information.
+/// En funktion för att spara till en fil och en funktion för att kunna hämta från filen. 
+/// </summary>
 public interface IFileService
 {
     bool SaveContactToFile(string contact);
@@ -36,17 +39,17 @@ public class FileService(string filePath) : IFileService
         {
             if (File.Exists(_filePath))
             {
-                var fileContent = File.ReadAllText(_filePath);
-                Debug.WriteLine($"Filen innehåller: {fileContent}");
+                using (var sr = new StreamReader(_filePath))
+                {
+                    return sr.ReadToEnd();
+                }
             }
+
         }
         catch (Exception ex)
-        {
-            Debug.WriteLine($"Fel vid läsning av filen: {ex.Message}");
-        }
+        { Debug.WriteLine(ex.Message); }
         return null!;
-        
     }
 
-    
+
 }
