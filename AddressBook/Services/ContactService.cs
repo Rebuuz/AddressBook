@@ -1,16 +1,17 @@
-﻿using AddressBook.Models;
+﻿using AddressBook.Interfaces;
+using AddressBook.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace AddressBook.Services;
 
-public class ContactService
+public class ContactService : IContactService
 {
     /// <summary>
-    /// Sparar till en json-fil på datorn. 
+    /// Sparar till en json-fil på datorn. Filen läggs inne i de separata mapparna för AddresBook och AddressBook.Tests.
     /// </summary>
-    private readonly FileService _fileService = new FileService(Path.Combine(Environment.CurrentDirectory, @"..\..\..\SavedFiles\content.json"));
-
+    private readonly FileService _fileService = new FileService(Path.Combine(Environment.CurrentDirectory, @"..\..\..\contacts.json"));
+    
     /// <summary>
     /// En tom lista
     /// </summary>
@@ -27,13 +28,13 @@ public class ContactService
             {
                 _contacts.Add(contact);
                 _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
-                
+
                 Console.WriteLine("Kontakten är tillagd i addressboken.");
                 Console.WriteLine();
                 Thread.Sleep(2000);
             }
         }
-        
+
         catch (Exception ex)
         {
             Debug.WriteLine($"Fel vid tillägg av kontakt: {ex.Message}");
@@ -99,13 +100,13 @@ public class ContactService
     {
         existingContact.FirstName = newFirstName;
         existingContact.LastName = newLastName;
-        existingContact.Email = newEmail;   
+        existingContact.Email = newEmail;
         existingContact.Number = newNumber;
         existingContact.Address = newAddress;
         existingContact.City = newCity;
         existingContact.Region = newRegion;
 
-       _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+        _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
 
     }
 

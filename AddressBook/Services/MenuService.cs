@@ -102,18 +102,17 @@ public class MenuService
         Console.Clear();
         Console.WriteLine("Kontaktinformation:");
         Console.WriteLine();
-        Console.WriteLine($"Namn: {selectedContact.FirstName} {selectedContact.LastName}");
-        Console.WriteLine($"Email: {selectedContact.Email}");
-        Console.WriteLine($"Telefonnummer: {selectedContact.Number}");
-        Console.WriteLine($"Address: {selectedContact.Address}");
-        Console.WriteLine($"Address: {selectedContact.City}");
-        Console.WriteLine($"Address: {selectedContact.Region}");
+        Console.WriteLine($"Namn:       {selectedContact.FirstName} {selectedContact.LastName}");
+        Console.WriteLine($"Email:      {selectedContact.Email}");
+        Console.WriteLine($"Telefon:    {selectedContact.Number}");
+        Console.WriteLine($"Address:    {selectedContact.Address}, {selectedContact.Region}, {selectedContact.City}");
         Console.WriteLine();
 
         Console.WriteLine("1. Ändra kontaktinformation");
         Console.WriteLine("2. Radera kontakt.");
         Console.WriteLine();
         Console.Write("Välj en av ovanstående siffor: ");
+        Console.WriteLine("Klicka två gånger på enter för att komma tillbaka till menyn.");
 
         var options = Console.ReadLine();
 
