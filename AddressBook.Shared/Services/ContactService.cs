@@ -1,9 +1,10 @@
-﻿using AddressBook.Interfaces;
-using AddressBook.Models;
+﻿using AddressBook.Shared.Interfaces;
+using AddressBook.Shared.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace AddressBook.Services;
+namespace AddressBook.Shared.Services;
+
 
 public class ContactService : IContactService
 {
@@ -11,11 +12,15 @@ public class ContactService : IContactService
     /// Sparar till en json-fil på datorn. Filen läggs inne i de separata mapparna för AddresBook och AddressBook.Tests.
     /// </summary>
     private readonly FileService _fileService = new FileService(Path.Combine(Environment.CurrentDirectory, @"..\..\..\contacts.json"));
-    
+
+
+
     /// <summary>
     /// En tom lista
     /// </summary>
-    private List<Contact> _contacts = [];
+    public List<Contact> _contacts = [];
+
+    public Contact CurrentContact { get; set; } = null!;
 
     /// <summary>
     /// Lägger till objekt (kontakter) till listan
@@ -112,6 +117,4 @@ public class ContactService : IContactService
 
 
 }
-
-
 

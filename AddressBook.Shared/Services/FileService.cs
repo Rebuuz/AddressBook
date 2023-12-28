@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 
-namespace AddressBook.Services;
+namespace AddressBook.Shared.Services;
 
 /// <summary>
 /// Ett interface till klassen med information.
@@ -20,8 +20,8 @@ public class FileService(string filePath) : IFileService
     {
         try
         {
-            using (var sw = new StreamWriter(_filePath)) 
-            { 
+            using (var sw = new StreamWriter(_filePath))
+            {
                 sw.WriteLine(contact);
             }
             return true;
@@ -53,3 +53,4 @@ public class FileService(string filePath) : IFileService
 
 
 }
+

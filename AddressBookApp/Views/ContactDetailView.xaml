@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="AddressBookApp.Views.ContactDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AddressBookApp.Views"
+             
+             xmlns:viewmodels="clr-namespace:AddressBookApp.ViewModels"
+             xmlns:models="clr-namespace:AddressBook.Shared.Models;assembly=AddressBook.Shared"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ContactDetailViewModel}"
+             
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0">
+            <Label FontSize="18" FontWeight="SemiBold" HorizontalContentAlignment="Center" Content="Contact Details" />
+            <Button Margin="0,10,0,0" Width="150" Content="Edit Contact" Command="{Binding NavigateToUpdateCommand}" />
+            <Button Margin="0,10,0,10" Width="150" Content="Delete Contact" Command="{Binding NavigateToAddCommand}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock FontWeight="Bold" Text="Name: "></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Contact.FirstName}"></TextBlock>
+                <TextBlock Text=" "/> 
+                <TextBlock Text="{Binding Contact.LastName}"></TextBlock>
+            </StackPanel>
+            <TextBlock Text=""/>
+            <TextBlock FontWeight="Bold" Text="Email: "></TextBlock>
+            <TextBlock Text="{Binding Contact.Email}"></TextBlock>
+            <TextBlock Text=""/>
+            <TextBlock FontWeight="Bold" Text="Phone Number: "></TextBlock>
+            <TextBlock Text="{Binding Contact.Number}"></TextBlock>
+            <TextBlock Text=""/>
+            <TextBlock FontWeight="Bold" Text="Address: "></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Contact.Address}"></TextBlock>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Contact.City}"></TextBlock>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Contact.Region}"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <Button Margin="10" Width="150" Content="Go Back" Command="{Binding NavigateBackCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

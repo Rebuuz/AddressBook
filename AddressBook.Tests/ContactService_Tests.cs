@@ -1,6 +1,6 @@
-﻿using AddressBook.Interfaces;
-using AddressBook.Models;
-using AddressBook.Services;
+﻿using AddressBook.Shared.Interfaces;
+using AddressBook.Shared.Models;
+using AddressBook.Shared.Services;
 
 
 namespace AddressBook.Tests;

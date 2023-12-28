@@ -1,4 +1,5 @@
-﻿using AddressBook.Models;
+﻿using AddressBook.Shared.Models;
+using AddressBook.Shared.Services;
 
 namespace AddressBook.Services;
 

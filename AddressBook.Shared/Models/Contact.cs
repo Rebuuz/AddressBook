@@ -1,6 +1,6 @@
 ﻿using AddressBook.Interfaces;
 
-namespace AddressBook.Models;
+namespace AddressBook.Shared.Models;
 
 public class Contact : IContact
 {
@@ -15,6 +15,12 @@ public class Contact : IContact
     public string Address { get; set; } = null!;
     public string City { get; set; } = null!;
     public string Region { get; set; } = null!;
+
+    ///En tom konstruktor
+    public Contact()
+    {
+
+    }
 
     /// <summary>
     /// Konstruktor för klassen som använder sig av nedanstående params utefter ovanstående kod.
