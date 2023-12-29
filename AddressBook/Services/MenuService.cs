@@ -15,14 +15,13 @@ public class MenuService
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("### ADDRESSBOK ###");
+            Console.WriteLine("### ADDRESSBOOK ###");
             Console.WriteLine();
             Console.WriteLine("MENU");
             Console.WriteLine();
-            Console.WriteLine("1. Öppna Addressboken.");
-            Console.WriteLine("2. Lägg till ny kontakt.");
-            Console.WriteLine("3. Sök på kontakt.");
-            Console.WriteLine("4. Avsluta.");
+            Console.WriteLine("1. Open AddressBook.");
+            Console.WriteLine("2. Add New Contact.");
+            Console.WriteLine("3. Exit.");
 
             var option = Console.ReadLine();    
 
@@ -35,11 +34,9 @@ public class MenuService
                     ShowAddMenu();
                     break;
                 case "3":
-                    break;
-                case "4":
                     return;
                 default:
-                    Console.WriteLine("Felaktigt val, välj något av ovanstående istället.");
+                    Console.WriteLine("Invalid option, please enter one of the options above.");
                     break;
             }
         }
@@ -53,21 +50,27 @@ public class MenuService
     {
         Console.Clear();
         Console.WriteLine();
-        Console.WriteLine("Alla kontakter i adressboken:");
+        Console.WriteLine("~ All Contacts ~");
         Console.WriteLine();
 
         var contacts = _contactService.GetContactsFromList();
 
+        ///Shows contacts listed with a number so you can then later choose which contact to read more details about.
         int index = 1;
 
         foreach (var contact in contacts)
         {
-            Console.WriteLine($"  {index}. {contact.FirstName} {contact.LastName}");
+            Console.WriteLine($"  {index}. {contact.FirstName} {contact.LastName, -10} <{contact.Email}>");
             index++;
         }
 
+        Console.WriteLine("_______________________________________________________________");
         Console.WriteLine();
-        Console.Write("Ange siffran på kontakten du vill öppna: ");
+        Console.WriteLine("Click Enter to go back.");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.Write("Choose the number corresponding to the contact you want to open: ");
 
         int selectedIndex;
         bool isValidInput = int.TryParse(Console.ReadLine(), out selectedIndex);
@@ -84,15 +87,14 @@ public class MenuService
                 }
                 index++;
             }
-
-            Console.WriteLine("Ogiltigt val. Vänligen ange ett giltigt nummer för att välja en kontakt.");
         }
         else
         {
-            Console.WriteLine("Ogiltig inmatning. Ange ett nummer.");
+            Console.WriteLine("Choose one of the options or press Enter again to exit.");
         }
 
         Console.ReadKey();
+ 
     }
 
     /// <summary>
@@ -101,19 +103,22 @@ public class MenuService
     public void DisplayContactDetails(Contact selectedContact)
     {
         Console.Clear();
-        Console.WriteLine("Kontaktinformation:");
+        Console.WriteLine("Contact Details");
         Console.WriteLine();
-        Console.WriteLine($"Namn:       {selectedContact.FirstName} {selectedContact.LastName}");
+        Console.WriteLine($"Name:       {selectedContact.FirstName} {selectedContact.LastName}");
         Console.WriteLine($"Email:      {selectedContact.Email}");
-        Console.WriteLine($"Telefon:    {selectedContact.Number}");
+        Console.WriteLine($"Phone:      {selectedContact.Number}");
         Console.WriteLine($"Address:    {selectedContact.Address}, {selectedContact.Region}, {selectedContact.City}");
         Console.WriteLine();
 
-        Console.WriteLine("1. Ändra kontaktinformation");
-        Console.WriteLine("2. Radera kontakt.");
+        Console.WriteLine("1. Update contact information.");
+        Console.WriteLine("2. Delete contact.");
         Console.WriteLine();
-        Console.Write("Välj en av ovanstående siffor: ");
-        Console.WriteLine("Klicka två gånger på enter för att komma tillbaka till menyn.");
+        Console.Write("Choose one of the options above: ");
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Click twice on any key to go back.");
+        Console.WriteLine();
 
         var options = Console.ReadLine();
 
@@ -121,24 +126,24 @@ public class MenuService
         {
             case "1":
                 ///Hade velat lägga till att man ska kunna välja vilken information som ska ändras i listan istället för att behöva skriva in allt igen
-                Console.Write("Förnamn: ");
+                Console.Write("First name: ");
                 string newFirstName = Console.ReadLine()!;
-                Console.Write("Efternamn: ");
+                Console.Write("Last name: ");
                 string newLastName = Console.ReadLine()!;
                 Console.Write("Email: ");
                 string newEmail = Console.ReadLine()!;
-                Console.Write("Telefonnummer: ");
+                Console.Write("Phone number: ");
                 string newNumber = Console.ReadLine()!;
                 Console.Write("Address: ");
                 string newAddress = Console.ReadLine()!;
-                Console.Write("Stad: ");
+                Console.Write("City: ");
                 string newCity = Console.ReadLine()!;
-                Console.Write("Postnummer: ");
+                Console.Write("Postal code: ");
                 string newRegion = Console.ReadLine()!;
 
                 _contactService.UpdateContactInformation(selectedContact, newFirstName, newLastName, newEmail, newNumber, newAddress, newCity, newRegion);
                 Console.WriteLine();
-                Console.WriteLine("Kontakten är uppdaterad.");
+                Console.WriteLine("Contact updated successfully.");
 
                 break;
             case "2":
@@ -146,7 +151,7 @@ public class MenuService
                 Console.ReadLine();
                 break;
             default:
-                Console.WriteLine("Välj en av ovanstående siffror.");
+                Console.WriteLine("Choose on of the options above.");
                 Console.ReadLine();    
                 break;
         }
@@ -161,25 +166,25 @@ public class MenuService
         var contact = new Contact("firstname", "lastname", "email", "number", "address", "city", "region");
 
         Console.Clear();
-        Console.Write("Förnamn: ");
+        Console.Write("First name: ");
         contact.FirstName = Console.ReadLine()!;
-        Console.Write("Efternamn: ");
+        Console.Write("Last name: ");
         contact.LastName = Console.ReadLine()!;
         Console.Write("Email: ");
         contact.Email = Console.ReadLine()!;
-        Console.Write("Telefonnummer: ");
+        Console.Write("Phone number: ");
         contact.Number = Console.ReadLine()!;
         Console.Write("Address: ");
         contact.Address = Console.ReadLine()!;
-        Console.Write("Stad: ");
+        Console.Write("City: ");
         contact.City = Console.ReadLine()!;
-        Console.Write("Postnummer: ");
+        Console.Write("Postal Code: ");
         contact.Region = Console.ReadLine()!;   
 
         _contactService.AddContactToList(contact);
 
         Console.WriteLine();
-        Console.WriteLine("Kontakten är tillagd.");
+        Console.WriteLine("Contact added successfully.");
     }
 
 

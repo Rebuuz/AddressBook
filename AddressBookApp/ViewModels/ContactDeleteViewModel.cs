@@ -1,24 +1,23 @@
-﻿
+﻿using AddressBook.Shared.Models;
 using AddressBook.Shared.Services;
-using AddressBook.Shared.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Security.Cryptography;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Controls;
 
 namespace AddressBookApp.ViewModels;
 
-public partial class ContactUpdateViewModel : ObservableObject
+public partial class ContactDeleteViewModel : ObservableObject
 {
     private readonly IServiceProvider _sp;
     private readonly ContactService _contactService;
 
     /// <summary>
-    /// constructor
+    /// Constructor
     /// </summary>
     /// <param name="sp"></param>
     /// <param name="contactService"></param>
-    public ContactUpdateViewModel(IServiceProvider sp, ContactService contactService)
+    public ContactDeleteViewModel(IServiceProvider sp, ContactService contactService)
     {
         _sp = sp;
         _contactService = contactService;
@@ -26,30 +25,30 @@ public partial class ContactUpdateViewModel : ObservableObject
         Contact = _contactService.CurrentContact;
     }
 
+    public string emailConfirm { get; set; } = null!;
+
     [ObservableProperty]
     private Contact contact = new();
 
+
     /// <summary>
-    /// commands/functions
+    /// Commands/ functions
     /// </summary>
-
+    /// <param name="contact"></param>
     [RelayCommand]
-    private void Update()
+    private void Delete(Contact contact)
     {
-        _contactService.Update(Contact);
+        _contactService.RemoveWPF(emailConfirm);
 
         var mainVewModel = _sp.GetRequiredService<MainViewModel>();
-        mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactDetailViewModel>();
+        mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactListViewModel>();
 
     }
 
     [RelayCommand]
-    private void NavigateToDetail(Contact contact)
+    private void NavigateBack()
     {
-        _contactService.CurrentContact = contact;
-
         var mainVewModel = _sp.GetRequiredService<MainViewModel>();
         mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactDetailViewModel>();
     }
-
 }

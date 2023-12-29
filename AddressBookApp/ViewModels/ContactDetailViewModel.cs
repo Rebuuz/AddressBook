@@ -13,6 +13,11 @@ public partial class ContactDetailViewModel : ObservableObject
     private readonly IServiceProvider _sp;
     private readonly ContactService _contactService;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="sp"></param>
+    /// <param name="contactService"></param>
     public ContactDetailViewModel(IServiceProvider sp, ContactService contactService)
     {
         _sp = sp;
@@ -24,6 +29,10 @@ public partial class ContactDetailViewModel : ObservableObject
     [ObservableProperty]
     private Contact contact = new();
 
+
+    /// <summary>
+    /// commands/functions
+    /// </summary>
     [RelayCommand]
     private void NavigateToUpdate()
     {
@@ -36,5 +45,12 @@ public partial class ContactDetailViewModel : ObservableObject
     {
         var mainVewModel = _sp.GetRequiredService<MainViewModel>();
         mainVewModel.CurrentViewModel = _sp.GetRequiredService<MainMenuViewModel>();
+    }
+
+    [RelayCommand]
+    private void NavigateToDelete()
+    {
+        var mainVewModel = _sp.GetRequiredService<MainViewModel>();
+        mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactDeleteViewModel>();
     }
 }

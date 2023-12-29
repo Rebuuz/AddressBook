@@ -18,6 +18,11 @@ public partial class ContactAddViewModel : ObservableObject
     private readonly IServiceProvider _sp;
     private readonly ContactService _contactService;
 
+    /// <summary>
+    /// constructor for service provider and contactservice
+    /// </summary>
+    /// <param name="sp"></param>
+    /// <param name="contactService"></param>
     public ContactAddViewModel(IServiceProvider sp, ContactService contactService)
     {
         _sp = sp;
@@ -27,6 +32,10 @@ public partial class ContactAddViewModel : ObservableObject
     [ObservableProperty]
     private Contact contact = new Contact();
 
+
+    /// <summary>
+    /// Commands/functions
+    /// </summary>
     [RelayCommand]
     private void AddContactToList()
     {

@@ -2,6 +2,7 @@
 using AddressBook.Shared.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Xml.Serialization;
 
 namespace AddressBook.Shared.Services;
 
@@ -34,7 +35,7 @@ public class ContactService : IContactService
                 _contacts.Add(contact);
                 _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
 
-                Console.WriteLine("Kontakten är tillagd i addressboken.");
+                Console.WriteLine("Contact added successfully.");
                 Console.WriteLine();
                 Thread.Sleep(2000);
             }
@@ -42,7 +43,7 @@ public class ContactService : IContactService
 
         catch (Exception ex)
         {
-            Debug.WriteLine($"Fel vid tillägg av kontakt: {ex.Message}");
+            Debug.WriteLine($"Error while adding contact:  {ex.Message}");
         }
     }
 
@@ -75,7 +76,7 @@ public class ContactService : IContactService
     /// </summary>
     public void DeleteContactsFromList(Contact contact)
     {
-        Console.WriteLine($"Bekräfta att du vill radera {contact.FirstName} {contact.LastName} genom att ange epost-adressen: ");
+        Console.WriteLine($"Confirm you want to delete {contact.FirstName} {contact.LastName} by email: ");
         string deleteByEmail = Console.ReadLine()!;
 
         try
@@ -86,7 +87,7 @@ public class ContactService : IContactService
                 _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
 
                 Console.WriteLine();
-                Console.WriteLine("Kontakten är nu borttagen.");
+                Console.WriteLine("Contact deletet successfully. Please wait.");
                 Console.WriteLine();
                 Thread.Sleep(2000);
             }
@@ -94,7 +95,7 @@ public class ContactService : IContactService
 
         catch (Exception ex)
         {
-            Debug.WriteLine($"Fel vid radering av kontakt: {ex.Message}");
+            Debug.WriteLine($"Error while deleting contact: {ex.Message}");
         }
     }
 
@@ -115,6 +116,43 @@ public class ContactService : IContactService
 
     }
 
+    /// <summary>
+    /// Another Update for the wpf-app, because I couldn't make the above one work, so this one is the only one used in the wpf-project
+    /// </summary>
+    /// <param name="contact"></param>
+    public void Update(Contact contact)
+    {
+        var contacts = _contacts.FirstOrDefault(x => x.Email == contact.Email);
+        if(contacts != null)
+        {
+            contacts = contact;
+
+            _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+        }
+    }
+
+    ///Another Delete for my wpf-app so I don't have to use the one I have above for my console-app
+   public void RemoveWPF(string emailConfirm)
+    {
+        try
+        {
+            if (string.Equals(emailConfirm, CurrentContact.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                _contacts.Remove(CurrentContact);
+                _fileService.SaveContactToFile(JsonConvert.SerializeObject(_contacts));
+
+            }
+            else
+            {
+                throw new Exception("Email doesn't match, contact was not deleted.");
+            }
+        }
+
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error while deleting contact: {ex.Message}");
+        }
+    }
 
 }
 

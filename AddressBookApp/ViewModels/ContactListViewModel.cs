@@ -16,7 +16,11 @@ public partial class ContactListViewModel : ObservableObject
     private readonly IServiceProvider _sp;
     private readonly ContactService _contactService;
 
-   
+   /// <summary>
+   /// constructor for serviceprovider and contactservice
+   /// </summary>
+   /// <param name="sp"></param>
+   /// <param name="contactService"></param>
 
     public ContactListViewModel(IServiceProvider sp, ContactService contactService)
     {
@@ -28,6 +32,10 @@ public partial class ContactListViewModel : ObservableObject
 
     [ObservableProperty]
     private ObservableCollection<Contact> _contacts = new ObservableCollection<Contact>();
+
+    /// <summary>
+    /// Different functions, mainly used for the buttons
+    /// </summary>
 
     [RelayCommand]
     private void NavigateToAdd()
@@ -44,8 +52,10 @@ public partial class ContactListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void NavigateToUpdate()
+    private void NavigateToUpdate(Contact contact)
     {
+        _contactService.CurrentContact = contact;
+
         var mainVewModel = _sp.GetRequiredService<MainViewModel>();
         mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactUpdateViewModel>();
     }
@@ -57,5 +67,14 @@ public partial class ContactListViewModel : ObservableObject
 
         var mainVewModel = _sp.GetRequiredService<MainViewModel>();
         mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactDetailViewModel>();
+    }
+
+    [RelayCommand]
+    private void NavigateToDelete(Contact contact)
+    {
+        _contactService.CurrentContact = contact;
+        
+        var mainVewModel = _sp.GetRequiredService<MainViewModel>();
+        mainVewModel.CurrentViewModel = _sp.GetRequiredService<ContactDeleteViewModel>();
     }
 }

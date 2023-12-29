@@ -40,7 +40,9 @@
                         </WrapPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Content="Open" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDetailCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            <Button Content="i" Width="25" Height="25" Margin="5" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDetailCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            <Button Content="..." Width="25" Height="25" Margin="5" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                            <Button Content="x" Width="25" Height="25" Margin="5" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

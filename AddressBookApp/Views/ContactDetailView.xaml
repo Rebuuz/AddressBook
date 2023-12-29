@@ -21,33 +21,33 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0">
+        <StackPanel DataContext="{Binding Contact}" Grid.Row="0">
             <Label FontSize="18" FontWeight="SemiBold" HorizontalContentAlignment="Center" Content="Contact Details" />
-            <Button Margin="0,10,0,0" Width="150" Content="Edit Contact" Command="{Binding NavigateToUpdateCommand}" />
-            <Button Margin="0,10,0,10" Width="150" Content="Delete Contact" Command="{Binding NavigateToAddCommand}" />
+            <Button Content="Edit Contact" Width="100" Margin="10" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+            <Button Content="Delete Contact" Width="100" Margin="10" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1">
+        <StackPanel DataContext="{Binding Contact}" Grid.Row="1">
             <TextBlock FontWeight="Bold" Text="Name: "></TextBlock>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Contact.FirstName}"></TextBlock>
+                <TextBlock Text="{Binding FirstName}"></TextBlock>
                 <TextBlock Text=" "/> 
-                <TextBlock Text="{Binding Contact.LastName}"></TextBlock>
+                <TextBlock Text="{Binding LastName}"></TextBlock>
             </StackPanel>
             <TextBlock Text=""/>
             <TextBlock FontWeight="Bold" Text="Email: "></TextBlock>
-            <TextBlock Text="{Binding Contact.Email}"></TextBlock>
+            <TextBlock Text="{Binding Email}"></TextBlock>
             <TextBlock Text=""/>
             <TextBlock FontWeight="Bold" Text="Phone Number: "></TextBlock>
-            <TextBlock Text="{Binding Contact.Number}"></TextBlock>
+            <TextBlock Text="{Binding Number}"></TextBlock>
             <TextBlock Text=""/>
             <TextBlock FontWeight="Bold" Text="Address: "></TextBlock>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Contact.Address}"></TextBlock>
+                <TextBlock Text="{Binding Address}"></TextBlock>
                 <TextBlock Text=" "/>
-                <TextBlock Text="{Binding Contact.City}"></TextBlock>
+                <TextBlock Text="{Binding City}"></TextBlock>
                 <TextBlock Text=" "/>
-                <TextBlock Text="{Binding Contact.Region}"></TextBlock>
+                <TextBlock Text="{Binding Region}"></TextBlock>
             </StackPanel>
         </StackPanel>
 

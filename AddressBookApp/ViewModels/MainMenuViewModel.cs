@@ -10,13 +10,19 @@ public partial class MainMenuViewModel : ObservableObject
 {
     private readonly IServiceProvider _sp;
  
-
+    /// <summary>
+    /// constructor
+    /// </summary>
+    /// <param name="sp"></param>
     public MainMenuViewModel(IServiceProvider sp)
     {
         _sp = sp;
  
     }
 
+    /// <summary>
+    /// Commands/functions
+    /// </summary>
     [RelayCommand]
     private void NavigateToList()
     {

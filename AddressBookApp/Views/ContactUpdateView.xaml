@@ -16,29 +16,33 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="430" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
+        <StackPanel DataContext="{Binding Contact}" Grid.Row="0">
             <Label HorizontalContentAlignment="Center" Margin="20" Content="Edit Contact"  />
             <Label Content="First Name"></Label>
-            <TextBox Text="{Binding Contact.FirstName}"></TextBox>
+            <TextBox Text="{Binding FirstName}"></TextBox>
             <Label Content="Last Name"></Label>
-            <TextBox Text="{Binding Contact.LastName}"></TextBox>
+            <TextBox Text="{Binding LastName}"></TextBox>
             <Label Content="Email"></Label>
-            <TextBox Text="{Binding Contact.Email}"></TextBox>
+            <TextBox Text="{Binding Email}"></TextBox>
             <Label Content="Phone Number"></Label>
-            <TextBox Text="{Binding Contact.Number}"></TextBox>
+            <TextBox Text="{Binding Number}"></TextBox>
             <Label Content="Address"></Label>
-            <TextBox Text="{Binding Contact.Address}"></TextBox>
+            <TextBox Text="{Binding Address}"></TextBox>
             <Label Content="City"></Label>
-            <TextBox Text="{Binding Contact.City}"></TextBox>
+            <TextBox Text="{Binding City}"></TextBox>
             <Label Content="Postal Code"></Label>
-            <TextBox Text="{Binding Contact.Region}"></TextBox>
-            <Button Height="20" Width="200" Margin="0,20,0,0" Content="Save" Command="{Binding UpdateContactInformationCommand}" />
+            <TextBox Text="{Binding Region}"></TextBox>
+            <Button Content="Save" Width="100" Margin="10" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
         </StackPanel>
 
         <StackPanel Grid.Row="1">
-            <Button Height="20" Width="200" Margin="0,20,0,0" Content="See Full Contact List" Command="{Binding NavigateToListCommand}" />
+            
+        </StackPanel>
+            
+        <StackPanel Grid.Row="2">
             <Button Height="20" Width="200" Margin="0,20,0,0" Content="Go Back to Menu" Command="{Binding NavigateBackCommand}" />
         </StackPanel>
     </Grid>

@@ -35,6 +35,10 @@
                     <views:ContactDetailView />
                 </DataTemplate>
 
+                <DataTemplate DataType="{x:Type viewmodels:ContactDeleteViewModel}">
+                    <views:ContactDeleteView />
+                </DataTemplate>
+
             </ContentControl.Resources>
         </ContentControl>
    </Grid>
